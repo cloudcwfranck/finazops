@@ -12,11 +12,11 @@ The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No 
 
 ## Run on GitHub
 
+[![Run FinOps Toolkit](https://github.com/cloudcwfranck/finazops/actions/workflows/run-app.yml/badge.svg?branch=main)](https://github.com/cloudcwfranck/finazops/actions/workflows/run-app.yml)
+=======
 You can execute the toolkit directly in a GitHub Actions runner using the
 `run-app` workflow. Click the badge below and then select **Run workflow** on the
 Actions page to start a one-off run.
-
-[![Run FinOps Toolkit](https://github.com/<OWNER>/<REPO>/actions/workflows/run-app.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/run-app.yml)
 
 ## Running on Replit or Linux/macOS
 
