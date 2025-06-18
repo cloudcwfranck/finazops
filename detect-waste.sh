@@ -8,20 +8,20 @@ YELLOW='\033[1;33m'
 RESET='\033[0m'
 
 # Mock data arrays: id:status:monthly_cost
-EC2_INSTANCES=(
-  "i-001:stopped:10"
-  "i-002:running:20"
-  "i-003:stopped:15"
+VMS=(
+  "vm-001:stopped:10"
+  "vm-002:running:20"
+  "vm-003:stopped:15"
 )
 
-EIPS=(
-  "eipalloc-001:detached:3"
-  "eipalloc-002:attached:0"
+PUBLIC_IPS=(
+  "pip-001:unassociated:3"
+  "pip-002:associated:0"
 )
 
-EBS_VOLUMES=(
-  "vol-001:unattached:5"
-  "vol-002:attached:0"
+MANAGED_DISKS=(
+  "disk-001:unattached:5"
+  "disk-002:attached:0"
 )
 
 # Print table header
@@ -39,21 +39,21 @@ print_row() {
   printf "\u2502 %-12s \u2502 %b%-8s%b \u2502 %4d %7s \u2502\n" "$id" "$color" "$status" "$RESET" "$cost" ""
 }
 
-for item in "${EC2_INSTANCES[@]}"; do
+for item in "${VMS[@]}"; do
   IFS=":" read -r id state cost <<< "$item"
   if [[ $state == "stopped" ]]; then
     print_row "$id" "$state" "$cost" "$RED"
     total=$((total + cost))
   fi
 done
-for item in "${EIPS[@]}"; do
+for item in "${PUBLIC_IPS[@]}"; do
   IFS=":" read -r id status cost <<< "$item"
-  if [[ $status == "detached" ]]; then
+  if [[ $status == "unassociated" ]]; then
     print_row "$id" "$status" "$cost" "$YELLOW"
     total=$((total + cost))
   fi
 done
-for item in "${EBS_VOLUMES[@]}"; do
+for item in "${MANAGED_DISKS[@]}"; do
   IFS=":" read -r id status cost <<< "$item"
   if [[ $status == "unattached" ]]; then
     print_row "$id" "$status" "$cost" "$YELLOW"

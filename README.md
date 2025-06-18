@@ -4,8 +4,8 @@ This repository contains a simple cross-platform FinOps command line toolkit wri
 
 ## Scripts
 
-- `detect-waste.sh` / `detect-waste.ps1` – find stopped EC2 instances, detached EIPs, and unattached EBS volumes and show estimated monthly waste.
-- `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple profiles and indicate if they are under or over budget.
+- `detect-waste.sh` / `detect-waste.ps1` – find stopped Azure VMs, unassociated public IPs, and unattached managed disks and show estimated monthly waste.
+- `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple subscriptions and indicate if they are under or over budget.
 - `generate-recommendations.sh` / `generate-recommendations.ps1` – display recommendations based on detected waste.
 
 The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No cloud APIs or additional tools are required.
@@ -47,7 +47,7 @@ These commands will output colorized tables summarizing waste, budgets, and reco
 
 ## Python FinOps CLI
 
-A new `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, profile management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI.
+A new `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, subscription management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI.
 
 Run the script with Python 3:
 
