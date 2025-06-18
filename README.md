@@ -36,3 +36,15 @@ powershell -ExecutionPolicy Bypass -File generate-recommendations.ps1
 
 These commands will output colorized tables summarizing waste, budgets, and recommended actions using mock data.
 
+
+## Python FinOps CLI
+
+A new `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, profile management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI.
+
+Run the script with Python 3:
+
+```bash
+python3 finops_cli.py --help
+```
+
+Exports can be written to CSV, JSON or PDF with `--report-type` and saved to a custom directory using `--dir`.
