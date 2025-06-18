@@ -1,1 +1,38 @@
-# finazops
+# FinOps CLI Toolkit
+
+This repository contains a simple cross-platform FinOps command line toolkit written in Bash and PowerShell. The scripts simulate detection of cloud waste, budget checks, and cost‑saving recommendations using local mock data. Output is styled with ANSI colors and Unicode tables similar to the screenshot referenced in the project description.
+
+## Scripts
+
+- `detect-waste.sh` / `detect-waste.ps1` – find stopped EC2 instances, detached EIPs, and unattached EBS volumes and show estimated monthly waste.
+- `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple profiles and indicate if they are under or over budget.
+- `generate-recommendations.sh` / `generate-recommendations.ps1` – display recommendations based on detected waste.
+
+The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No cloud APIs or additional tools are required.
+
+## Running on Replit or Linux/macOS
+
+```bash
+bash detect-waste.sh
+bash check-budgets.sh
+bash generate-recommendations.sh
+```
+
+Ensure the scripts have execute permissions:
+
+```bash
+chmod +x *.sh
+```
+
+## Running on Windows PowerShell
+
+In a PowerShell terminal run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File detect-waste.ps1
+powershell -ExecutionPolicy Bypass -File check-budgets.ps1
+powershell -ExecutionPolicy Bypass -File generate-recommendations.ps1
+```
+
+These commands will output colorized tables summarizing waste, budgets, and recommended actions using mock data.
+
