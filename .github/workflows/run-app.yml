@@ -7,15 +7,19 @@ jobs:
   execute:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
       - name: Install dependencies
         run: |
           pip install --quiet rich fpdf
-      - name: Run FinOps CLI
+
+      - name: Run FinOps CLI and scripts
         run: |
           python3 finops_cli.py --trend
           bash check-budgets.sh
