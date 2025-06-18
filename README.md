@@ -10,6 +10,12 @@ This repository contains a simple cross-platform FinOps command line toolkit wri
 
 The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No cloud APIs or additional tools are required.
 
+## Run on GitHub
+
+You can execute the toolkit directly in a GitHub Actions runner using the `run-app` workflow. Click the badge below, then select **Run workflow** on the Actions page.
+
+[![Run FinOps Toolkit](https://github.com/cloudcwfranck/finazops/actions/workflows/run-app.yml/badge.svg?branch=main)](https://github.com/cloudcwfranck/finazops/actions/workflows/run-app.yml)
+
 ## Running on Replit or Linux/macOS
 
 ```bash

@@ -1,0 +1,23 @@
+name: Run FinOps App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install --quiet rich fpdf
+      - name: Run FinOps CLI
+        run: |
+          python3 finops_cli.py --trend
+          bash check-budgets.sh
+          bash detect-waste.sh
+          bash generate-recommendations.sh
