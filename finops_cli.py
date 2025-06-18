@@ -20,10 +20,10 @@ console = Console()
 # Mock data
 def get_mock_costs():
     services = {
-        'EC2': 120.0,
-        'S3': 80.0,
-        'RDS': 40.0,
-        'Lambda': 10.0,
+        'Virtual Machines': 120.0,
+        'Storage Accounts': 80.0,
+        'SQL Database': 40.0,
+        'Functions': 10.0,
     }
     tags = {
         'env:prod': 150.0,
@@ -33,17 +33,17 @@ def get_mock_costs():
 
 def get_mock_budgets():
     return [
-        {'profile': 'profile-01', 'limit': 200, 'actual': 180},
-        {'profile': 'profile-02', 'limit': 150, 'actual': 170},
+        {'subscription': 'sub-01', 'limit': 200, 'actual': 180},
+        {'subscription': 'sub-02', 'limit': 150, 'actual': 170},
     ]
 
-def get_mock_instances(regions):
-    instances = [
-        {'id': 'i-001', 'state': 'running', 'region': 'us-east-1'},
-        {'id': 'i-002', 'state': 'stopped', 'region': 'us-east-1'},
-        {'id': 'i-003', 'state': 'stopped', 'region': 'us-west-2'},
+def get_mock_vms(locations):
+    vms = [
+        {'id': 'vm-001', 'state': 'running', 'location': 'eastus'},
+        {'id': 'vm-002', 'state': 'stopped', 'location': 'eastus'},
+        {'id': 'vm-003', 'state': 'stopped', 'location': 'westus2'},
     ]
-    return [i for i in instances if i['region'] in regions]
+    return [v for v in vms if v['location'] in locations]
 
 def get_mock_trend():
     base = datetime.now()
@@ -54,19 +54,19 @@ def get_mock_trend():
 
 def finops_audit():
     return {
-        'untagged': ['i-003', 'vol-001'],
-        'unused': ['i-002'],
-        'budget_breaches': ['profile-02'],
+        'untagged': ['vm-003', 'disk-001'],
+        'unused': ['vm-002'],
+        'budget_breaches': ['sub-02'],
     }
 
 def parse_args():
     p = argparse.ArgumentParser(description='FinOps CLI')
     p.add_argument('--time-range', type=int, default=30, help='Days of cost data')
     p.add_argument('--tag', nargs='*', help='Filter by tag')
-    p.add_argument('--profiles', nargs='*', help='Specific AWS profiles')
-    p.add_argument('--all', action='store_true', help='Use all profiles')
-    p.add_argument('--combine', action='store_true', help='Combine profiles by account')
-    p.add_argument('--regions', nargs='*', default=['us-east-1'], help='Regions to search')
+    p.add_argument('--subscriptions', nargs='*', help='Specific Azure subscriptions')
+    p.add_argument('--all', action='store_true', help='Use all subscriptions')
+    p.add_argument('--combine', action='store_true', help='Combine subscriptions by account')
+    p.add_argument('--locations', nargs='*', default=['eastus'], help='Azure locations to search')
     p.add_argument('--report-name', default='report', help='Base name for export files')
     p.add_argument('--report-type', nargs='*', default=[], choices=['csv', 'json', 'pdf'], help='Export formats')
     p.add_argument('--dir', default='.', help='Output directory')
@@ -108,7 +108,7 @@ def main():
     cost_by_service = sorted(services.items(), key=lambda x: x[1], reverse=True)
     cost_by_tag = {t: tags.get(t, 0) for t in (args.tag or tags.keys())}
     budgets = get_mock_budgets()
-    instances = get_mock_instances(args.regions)
+    instances = get_mock_vms(args.locations)
     trend = get_mock_trend() if args.trend else None
     audit = finops_audit()
 
@@ -120,20 +120,20 @@ def main():
     console.print(table)
 
     budget_table = Table(title='Budgets')
-    budget_table.add_column('Profile')
+    budget_table.add_column('Subscription')
     budget_table.add_column('Limit', justify='right')
     budget_table.add_column('Actual', justify='right')
     for b in budgets:
         color = 'red' if b['actual'] > b['limit'] else 'green'
-        budget_table.add_row(b['profile'], str(b['limit']), f"[{color}]{b['actual']}[/{color}]")
+        budget_table.add_row(b['subscription'], str(b['limit']), f"[{color}]{b['actual']}[/{color}]")
     console.print(budget_table)
 
-    inst_table = Table(title='EC2 Instances')
+    inst_table = Table(title='Azure VMs')
     inst_table.add_column('ID')
     inst_table.add_column('State')
-    inst_table.add_column('Region')
+    inst_table.add_column('Location')
     for inst in instances:
-        inst_table.add_row(inst['id'], inst['state'], inst['region'])
+        inst_table.add_row(inst['id'], inst['state'], inst['location'])
     console.print(inst_table)
 
     if trend:

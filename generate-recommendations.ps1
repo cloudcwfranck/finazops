@@ -2,24 +2,24 @@
 $yellow="`e[1;33m"
 $reset="`e[0m"
 
-$instances=@(
-  @{Id='i-001'; State='stopped'; Cost=10}
-  @{Id='i-002'; State='running'; Cost=20}
-  @{Id='i-003'; State='stopped'; Cost=15}
+$vms=@(
+  @{Id='vm-001'; State='stopped'; Cost=10}
+  @{Id='vm-002'; State='running'; Cost=20}
+  @{Id='vm-003'; State='stopped'; Cost=15}
 )
-$eips=@(
-  @{Id='eipalloc-001'; Attached=$false; Cost=3}
-  @{Id='eipalloc-002'; Attached=$true; Cost=0}
+$publicIps=@(
+  @{Id='pip-001'; Associated=$false; Cost=3}
+  @{Id='pip-002'; Associated=$true; Cost=0}
 )
-$volumes=@(
-  @{Id='vol-001'; Attached=$false; Cost=5}
-  @{Id='vol-002'; Attached=$true; Cost=0}
+$disks=@(
+  @{Id='disk-001'; Attached=$false; Cost=5}
+  @{Id='disk-002'; Attached=$true; Cost=0}
 )
 
 $recs=@()
-foreach($i in $instances){ if($i.State -eq 'stopped'){ $recs+= "Terminate $($i.Id) to save $${$i.Cost}/mo" } }
-foreach($e in $eips){ if(-not $e.Attached){ $recs+= "Release $($e.Id) to save $${$e.Cost}/mo" } }
-foreach($v in $volumes){ if(-not $v.Attached){ $recs+= "Delete $($v.Id) to save $${$v.Cost}/mo" } }
+foreach($i in $vms){ if($i.State -eq 'stopped'){ $recs+= "Terminate $($i.Id) to save $${$i.Cost}/mo" } }
+foreach($e in $publicIps){ if(-not $e.Associated){ $recs+= "Release $($e.Id) to save $${$e.Cost}/mo" } }
+foreach($v in $disks){ if(-not $v.Attached){ $recs+= "Delete $($v.Id) to save $${$v.Cost}/mo" } }
 
 Write-Host ""
 Write-Host "┌──┬──┐"
