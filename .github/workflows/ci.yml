@@ -1,0 +1,26 @@
+name: Build scripts
+
+on:
+  push:
+    branches: ['**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install --quiet rich fpdf
+      - name: Run Python script
+        run: |
+          python finops_cli.py --help
+      - name: Run shell scripts
+        run: |
+          bash check-budgets.sh
+          bash detect-waste.sh
+          bash generate-recommendations.sh
