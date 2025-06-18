@@ -21,7 +21,10 @@ jobs:
 
       - name: Run FinOps CLI and scripts
         run: |
-          python3 finops_cli.py --trend
-          bash check-budgets.sh
-          bash detect-waste.sh
-          bash generate-recommendations.sh
+          set -e
+          tmp=$(mktemp)
+          python3 finops_cli.py --trend | tee -a "$tmp"
+          bash check-budgets.sh | tee -a "$tmp"
+          bash detect-waste.sh | tee -a "$tmp"
+          bash generate-recommendations.sh | tee -a "$tmp"
+          cat "$tmp" >> "$GITHUB_STEP_SUMMARY"
