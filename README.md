@@ -56,3 +56,17 @@ python3 finops_cli.py --help
 ```
 
 Exports can be written to CSV, JSON or PDF with `--report-type` and saved to a custom directory using `--dir`.
+
+## Azure Authentication
+
+`azure_login.py` launches an interactive browser window to sign into Azure and
+prints your available subscriptions. It requires the `azure-identity` and
+`azure-mgmt-resource` packages which are installed automatically in the GitHub
+Actions workflow.
+
+Run locally with:
+
+```bash
+python3 azure_login.py
+```
+
