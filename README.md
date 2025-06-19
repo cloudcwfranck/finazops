@@ -96,7 +96,7 @@ Key capabilities include:
 * **Cost trend analysis** – bar charts summarising the last six months across profiles when `--trend` is used.
 * **FinOps audit** – view untagged resources, unused or stopped instances and budget breaches across profiles.
 * **Profile management** – automatic subscription detection, select with `--profiles`, use all with `--all` or combine using `--combine`.
-* **Export options** – set a name with `--report-name` and output to CSV, JSON and/or PDF with `--report-type` (e.g. `--report-type csv json`). Use `--dir` to choose the folder. Trend reports export to JSON only.
+* **Export options** – set a name with `--report-name` and output to CSV, JSON and/or PDF with `--report-type` (e.g. `--report-type csv json`). Use `--dir` to choose the folder. Trend reports export to JSON only. Markdown or HTML reports can be generated with `--export md` or `--export html` (requires the `jinja2` package).
 * **Improved error handling** and a beautiful terminal UI thanks to the Rich library.
 
 Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.

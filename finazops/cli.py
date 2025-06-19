@@ -4,7 +4,10 @@ import csv
 import json
 from pathlib import Path
 from datetime import datetime, timedelta
-from jinja2 import Template
+try:
+    from jinja2 import Template
+except ImportError:  # pragma: no cover - optional dependency
+    Template = None
 
 try:
     from rich import print
@@ -143,7 +146,11 @@ def export(report, args):
     out_dir = Path(args.dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     if args.export:
-        if args.export == 'md':
+        if Template is None:
+            console.print(
+                "[red]Jinja2 required for Markdown/HTML export. Install jinja2 package.[/red]"
+            )
+        elif args.export == 'md':
             template = Template(MD_TEMPLATE)
             content = template.render(**report)
             path = out_dir / f"{args.report_name}.md"
