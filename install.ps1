@@ -7,4 +7,5 @@ $python = (Get-Command python).Source
 $cmd = "$python -m pip"
 & $python -m pip install --upgrade pip
 & $python -m pip install -r requirements.txt
+& $python -m pip install -e . | Out-Null
 Write-Host "Dependencies installed"

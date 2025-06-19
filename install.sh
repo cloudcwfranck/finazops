@@ -14,5 +14,6 @@ PIP="$PYTHON -m pip"
 # Upgrade pip and install requirements
 $PIP install --upgrade pip >/dev/null
 $PIP install -r requirements.txt
+$PIP install -e . >/dev/null
 
 echo "Dependencies installed"
