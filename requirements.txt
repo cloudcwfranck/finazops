@@ -3,3 +3,5 @@ fpdf
 azure-identity
 azure-mgmt-resource
 jinja2
+fastapi
+uvicorn
