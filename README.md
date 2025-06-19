@@ -86,6 +86,19 @@ These commands will output colorized tables summarizing waste, budgets, and reco
 
 The `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, subscription management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI. When installed from PyPI it is available as the `finazops` command.
 
+Key capabilities include:
+
+* **Cost analysis by time period** – shows the current and previous month by default and lets you specify custom ranges with `--time-range`.
+* **Cost by Azure service** – sorted from highest to lowest cost for quick insight.
+* **Cost by tag** – retrieve spending data by one or more tags using `--tag`.
+* **Budget information** – display limits and actual spend for configured budgets.
+* **VM instance status** – list virtual machine states in selected regions via `--regions`.
+* **Cost trend analysis** – bar charts summarising the last six months when `--trend` is used.
+* **FinOps audit** – identify untagged resources, unused instances and budget breaches.
+* **Profile management** – auto-detect subscriptions, select specific ones with `--profiles`, use all with `--all` or merge with `--combine`.
+* **Export options** – output reports to CSV, JSON or PDF with `--report-type` and choose a directory using `--dir`. Trend reports currently export to JSON only.
+* **Improved error handling** and a visually appealing interface thanks to the Rich library.
+
 Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
 
 Run the CLI with Python or the installed command:
