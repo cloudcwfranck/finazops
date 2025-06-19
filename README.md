@@ -1,6 +1,18 @@
 # FinOps CLI Toolkit
 
-This repository contains a simple cross-platform FinOps command line toolkit written in Bash and PowerShell. The scripts simulate detection of cloud waste, budget checks, and cost‑saving recommendations using local mock data. Output is styled with ANSI colors and Unicode tables similar to the screenshot referenced in the project description.
+This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.  It is inspired by the [aws‑finops‑dashboard](https://github.com/ravikiranvm/aws-finops-dashboard) example and replicates the same workflow for Azure resources.  The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+
+## Quick start
+
+Clone the repository and install the Python dependencies:
+
+```bash
+git clone https://github.com/cloudcwfranck/finazops.git
+cd finazops
+./install.sh
+```
+
+After the packages are installed you can run the toolkit just like the AWS version but targeting Azure.
 
 ## Scripts
 
@@ -20,6 +32,8 @@ the run and view the output in the **Summary** tab directly in your browser.
 
 ## Running on Replit or Linux/macOS
 
+After cloning run `./install.sh` once to set up Python packages. Then execute:
+
 ```bash
 bash detect-waste.sh
 bash check-budgets.sh
@@ -34,7 +48,13 @@ chmod +x *.sh
 
 ## Running on Windows PowerShell
 
-In a PowerShell terminal run:
+In a PowerShell terminal run the installer once and then execute the scripts:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+Then run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File detect-waste.ps1
@@ -48,6 +68,7 @@ These commands will output colorized tables summarizing waste, budgets, and reco
 ## Python FinOps CLI
 
 A new `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, subscription management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI.
+Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
 
 Run the script with Python 3:
 
@@ -62,7 +83,7 @@ Exports can be written to CSV, JSON or PDF with `--report-type` and saved to a c
 `azure_login.py` launches an interactive browser window to sign into Azure and
 prints your available subscriptions. It requires the `azure-identity` and
 `azure-mgmt-resource` packages which are installed automatically in the GitHub
-Actions workflow.
+Actions workflow or by running `./install.sh` (or `install.ps1` on Windows).
 
 Run locally with:
 
