@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "finazops"
+name = "Franck Kengne"
 
 version = "0.1.0"
 description = "FinOps CLI Toolkit for Azure"
