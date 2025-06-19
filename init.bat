@@ -20,4 +20,6 @@ call .venv\Scripts\activate.bat
 %PYTHON% -m pip install --upgrade pip >nul
 %PYTHON% -m pip install -r requirements.txt
 
-echo Setup complete.
+%PYTHON% -m pip install -e . >nul
+
+echo Setup complete. Activate with "call .venv\Scripts\activate.bat".

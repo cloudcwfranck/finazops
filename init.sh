@@ -34,6 +34,10 @@ source .venv/bin/activate
 printf "${GREEN}Virtual environment activated${RESET}\n"
 
 # Install requirements
-pip install --upgrade pip >/dev/null
-pip install -r requirements.txt
+
+python3 -m pip install --upgrade pip >/dev/null
+python3 -m pip install -r requirements.txt
+python3 -m pip install -e . >/dev/null
 printf "${GREEN}Dependencies installed${RESET}\n"
+
+printf "${GREEN}All set! Run 'source .venv/bin/activate' to use the environment.${RESET}\n"
