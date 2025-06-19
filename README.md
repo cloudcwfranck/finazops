@@ -88,16 +88,16 @@ The `finops_cli.py` script adds enhanced features such as cost analysis by time 
 
 Key capabilities include:
 
-* **Cost analysis by time period** – shows the current and previous month by default and lets you specify custom ranges with `--time-range`.
-* **Cost by Azure service** – sorted from highest to lowest cost for quick insight.
-* **Cost by tag** – retrieve spending data by one or more tags using `--tag`.
+* **Cost analysis by time period** – view the current and previous month by default. Set custom ranges such as 7, 30 or 90 days with `--time-range`.
+* **Cost by Azure service** – sorted from highest to lowest for clear insight.
+* **Cost by tag** – filter spend by one or more tags using `--tag` (cost allocation tags must be enabled).
 * **Budget information** – display limits and actual spend for configured budgets.
-* **VM instance status** – list virtual machine states in selected regions via `--regions`.
-* **Cost trend analysis** – bar charts summarising the last six months when `--trend` is used.
-* **FinOps audit** – identify untagged resources, unused instances and budget breaches.
-* **Profile management** – auto-detect subscriptions, select specific ones with `--profiles`, use all with `--all` or merge with `--combine`.
-* **Export options** – output reports to CSV, JSON or PDF with `--report-type` and choose a directory using `--dir`. Trend reports currently export to JSON only.
-* **Improved error handling** and a visually appealing interface thanks to the Rich library.
+* **VM instance status** – detailed state information across specified regions via `--regions`.
+* **Cost trend analysis** – bar charts summarising the last six months across profiles when `--trend` is used.
+* **FinOps audit** – view untagged resources, unused or stopped instances and budget breaches across profiles.
+* **Profile management** – automatic subscription detection, select with `--profiles`, use all with `--all` or combine using `--combine`.
+* **Export options** – set a name with `--report-name` and output to CSV, JSON and/or PDF with `--report-type` (e.g. `--report-type csv json`). Use `--dir` to choose the folder. Trend reports export to JSON only.
+* **Improved error handling** and a beautiful terminal UI thanks to the Rich library.
 
 Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
 
