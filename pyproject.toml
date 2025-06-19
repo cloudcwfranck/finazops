@@ -10,7 +10,7 @@ description = "FinOps CLI Toolkit for Azure"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
-authors = [{name="Franck Kengne"}, email = "2monthscloud@gmail.com"]
+authors = [{name="Franck Kengne", email = "2monthscloud@gmail.com"}]
 dependencies = [
     "rich",
     "fpdf",
