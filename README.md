@@ -125,3 +125,21 @@ Run locally with:
 python3 azure_login.py
 ```
 
+## FastAPI Service
+
+The project also exposes a lightweight FastAPI web server that wraps the CLI.
+Start it with:
+
+```bash
+uvicorn finops_server:app --reload
+```
+
+Send prompts via HTTP:
+
+```bash
+curl -X POST http://localhost:8000/prompt -H "Content-Type: application/json" \
+    -d '{"prompt": "check budget for profile-05"}'
+```
+
+The response includes the command output in JSON format.
+
