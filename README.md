@@ -1,6 +1,7 @@
 # FinOps CLI Toolkit
 
 This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.  The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
 
 ## Quick start
 
