@@ -40,6 +40,12 @@ Execute the toolkit in a GitHub Actions runner using the `run-app` workflow.
 Click the badge above, choose **Run workflow**, and once the job completes open
 the run and view the output in the **Summary** tab directly in your browser.
 
+## Build and publish on GitHub
+
+The `publish` workflow builds the Python package and uploads it to PyPI. Push a
+tag like `v1.2.3` or trigger the workflow manually after configuring a
+`PYPI_API_TOKEN` secret in your repository settings.
+
 
 ## Running on Replit or Linux/macOS
 
