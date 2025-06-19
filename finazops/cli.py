@@ -4,6 +4,7 @@ import csv
 import json
 from pathlib import Path
 from datetime import datetime, timedelta
+from jinja2 import Template
 
 try:
     from rich import print
@@ -16,6 +17,70 @@ except ImportError as e:
     raise SystemExit('Required dependency missing: {}'.format(e))
 
 console = Console()
+
+MD_TEMPLATE = """\
+# FinOps Report
+
+## Cost by Service
+{% for svc, cost in cost_by_service %}
+- **{{ svc }}**: ${{ cost }}
+{% endfor %}
+
+## Budgets
+| Subscription | Limit | Actual |
+| --- | --- | --- |
+{% for b in budgets %}
+| {{ b.subscription }} | {{ b.limit }} | {{ b.actual }} |
+{% endfor %}
+
+## Azure VMs
+{% for inst in instances %}
+- {{ inst.id }} ({{ inst.state }} in {{ inst.location }})
+{% endfor %}
+
+## FinOps Audit
+{% for key, items in audit.items() %}
+- **{{ key }}**: {{ ', '.join(items) }}
+{% endfor %}
+"""
+
+HTML_TEMPLATE = """\
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>FinOps Report</title>
+</head>
+<body>
+<h1>FinOps Report</h1>
+<h2>Cost by Service</h2>
+<ul>
+{% for svc, cost in cost_by_service %}
+  <li>{{ svc }}: ${{ cost }}</li>
+{% endfor %}
+</ul>
+<h2>Budgets</h2>
+<table>
+  <tr><th>Subscription</th><th>Limit</th><th>Actual</th></tr>
+{% for b in budgets %}
+  <tr><td>{{ b.subscription }}</td><td>{{ b.limit }}</td><td>{{ b.actual }}</td></tr>
+{% endfor %}
+</table>
+<h2>Azure VMs</h2>
+<ul>
+{% for inst in instances %}
+  <li>{{ inst.id }} ({{ inst.state }} in {{ inst.location }})</li>
+{% endfor %}
+</ul>
+<h2>FinOps Audit</h2>
+<ul>
+{% for key, items in audit.items() %}
+  <li><strong>{{ key }}</strong>: {{ ', '.join(items) }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>
+"""
 
 # Mock data
 def get_mock_costs():
@@ -71,11 +136,23 @@ def parse_args():
     p.add_argument('--report-type', nargs='*', default=[], choices=['csv', 'json', 'pdf'], help='Export formats')
     p.add_argument('--dir', default='.', help='Output directory')
     p.add_argument('--trend', action='store_true', help='Show 6 month trend (JSON only)')
+    p.add_argument('--export', choices=['md', 'html'], help='Export analysis to Markdown or HTML')
     return p.parse_args()
 
 def export(report, args):
     out_dir = Path(args.dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    if args.export:
+        if args.export == 'md':
+            template = Template(MD_TEMPLATE)
+            content = template.render(**report)
+            path = out_dir / f"{args.report_name}.md"
+            path.write_text(content)
+        elif args.export == 'html':
+            template = Template(HTML_TEMPLATE)
+            content = template.render(**report)
+            path = out_dir / f"{args.report_name}.html"
+            path.write_text(content)
     if 'json' in args.report_type or args.trend:
         path = out_dir / f"{args.report_name}.json"
         with path.open('w') as f:
@@ -159,7 +236,7 @@ def main():
         'audit': audit,
         'trend': trend,
     }
-    if args.report_type or args.trend:
+    if args.report_type or args.trend or args.export:
         if args.trend and 'json' not in args.report_type:
             console.print('[yellow]Trend reports only support JSON export. Other formats ignored.[/yellow]')
         export(report, args)
