@@ -79,11 +79,13 @@ These commands will output colorized tables summarizing waste, budgets, and reco
 ## Python FinOps CLI
 
 The `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, subscription management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI. When installed from PyPI it is available as the `finazops` command.
+
 Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
 
 Run the CLI with Python or the installed command:
 
 ```bash
+
 finazops --help
 # or
 python3 finops_cli.py --help

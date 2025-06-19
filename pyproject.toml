@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "finazops"
+
 version = "0.1.0"
 description = "FinOps CLI Toolkit for Azure"
 readme = "README.md"
@@ -19,3 +20,4 @@ dependencies = [
 
 [project.scripts]
 finazops = "finazops.cli:main"
+
