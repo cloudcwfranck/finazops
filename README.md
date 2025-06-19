@@ -1,7 +1,7 @@
 # FinOps CLI Toolkit
 
-This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.  The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
-The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.  Most scripts rely on small mock datasets for quick demos, but the waste detection script can now query live Azure resources. Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+The remaining scripts continue to use local mock data for budget checks and recommendations.
 
 ## Quick start
 
@@ -35,11 +35,11 @@ finazops --help
 
 ## Scripts
 
-- `detect-waste.sh` / `detect-waste.ps1` – find stopped Azure VMs, unassociated public IPs, and unattached managed disks and show estimated monthly waste.
+- `detect-waste.sh` / `detect-waste.ps1` – verify Azure CLI authentication and list stopped VMs, unassociated public IPs and unattached managed disks, pulling their current cost from Azure.
 - `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple subscriptions and indicate if they are under or over budget.
 - `generate-recommendations.sh` / `generate-recommendations.ps1` – display recommendations based on detected waste.
 
-The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No cloud APIs or additional tools are required.
+Detect-waste uses the Azure CLI for live data while the other scripts continue to rely on Bash or PowerShell with mock inputs.
 
 ## Run on GitHub
 
@@ -87,9 +87,7 @@ powershell -ExecutionPolicy Bypass -File detect-waste.ps1
 powershell -ExecutionPolicy Bypass -File check-budgets.ps1
 powershell -ExecutionPolicy Bypass -File generate-recommendations.ps1
 ```
-
-These commands will output colorized tables summarizing waste, budgets, and recommended actions using mock data.
-
+These commands output colorized tables summarizing waste, budgets, and recommendations. Waste data comes from Azure while the other reports use mock inputs.
 
 ## Python FinOps CLI
 
