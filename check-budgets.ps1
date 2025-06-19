@@ -1,24 +1,10 @@
-# Check budgets using mock data
-$red="`e[1;31m"
-$green="`e[1;32m"
-$reset="`e[0m"
+# Show Azure budgets using the Azure CLI
+if (-not (Get-Command az -ErrorAction SilentlyContinue)) {
+    Write-Error "Azure CLI is required. Install from https://learn.microsoft.com/cli/azure/install-azure-cli"; exit 1
+}
 
-$budgets=@(
-  @{Subscription='sub-01'; Limit=100; Actual=90}
-  @{Subscription='sub-02'; Limit=120; Actual=130}
-)
+if (-not (az account show 2>$null)) { az login }
 
 Write-Host ""
-Write-Host "┌──┬──┬──┐"
-Write-Host "│ Subscription │ Limit     │ Actual    │"
-Write-Host "├──┼──┼──┤"
-foreach($b in $budgets){
-  if($b.Actual -gt $b.Limit){
-    $color=$red
-  }else{
-    $color=$green
-  }
-  Write-Host ("│ {0,-12} │ {1,6}    │ {2,6}    │" -f $b.Subscription, $b.Limit, $b.Actual) -ForegroundColor ($color.Trim('`e[0m'))
-}
-Write-Host "└──┴──┴──┘"
-
+Write-Host "Budgets:" 
+az consumption budget list --query "[].{Subscription:name,Limit:amount,Current:currentSpend.amount}" -o table

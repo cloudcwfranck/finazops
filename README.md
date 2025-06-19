@@ -1,7 +1,8 @@
 # FinOps CLI Toolkit
 
-This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.  The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
-The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.
+The scripts detect cloud waste, check budgets and generate cost‑saving recommendations by querying your authenticated Azure tenant.
+Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
 
 ## Quick start
 
@@ -10,10 +11,21 @@ Clone the repository and install the Python dependencies:
 ```bash
 git clone https://github.com/cloudcwfranck/finazops.git
 cd finazops
-./install.sh
+bash init.sh   # or run init.bat on Windows
 ```
 
-After the packages are installed you can run the toolkit just like the AWS version but targeting Azure.
+The setup script installs dependencies, checks for the Azure CLI and runs `az login` if you are not already authenticated.
+
+After setup you can run the toolkit against your Azure resources.
+
+## Components
+
+The repository is organised into several parts:
+
+- Shell and PowerShell scripts for common FinOps tasks.
+- A Python CLI available as the `finazops` command.
+- A lightweight FastAPI service for programmatic access.
+- Cross-platform setup scripts `init.sh` and `init.bat` to create a virtual environment, install requirements and authenticate.
 
 ## Install from PyPI
 
@@ -27,10 +39,10 @@ finazops --help
 ## Scripts
 
 - `detect-waste.sh` / `detect-waste.ps1` – find stopped Azure VMs, unassociated public IPs, and unattached managed disks and show estimated monthly waste.
-- `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple subscriptions and indicate if they are under or over budget.
+- `check-budgets.sh` / `check-budgets.ps1` – query Azure budgets for the current subscription.
 - `generate-recommendations.sh` / `generate-recommendations.ps1` – display recommendations based on detected waste.
 
-The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No cloud APIs or additional tools are required.
+The scripts use the Azure CLI and require you to be authenticated to your tenant.
 
 ## Run on GitHub
 
@@ -49,7 +61,7 @@ tag like `v1.2.3` or trigger the workflow manually after configuring a
 
 ## Running on Replit or Linux/macOS
 
-After cloning run `./install.sh` once to set up Python packages. Then execute:
+After cloning run `./init.sh` (or `init.bat` on Windows) once to set up the virtual environment, install packages and authenticate. In new shells activate it with `source .venv/bin/activate` (or `call .venv\Scripts\activate.bat` on Windows). Then execute:
 
 ```bash
 bash detect-waste.sh
@@ -65,11 +77,13 @@ chmod +x *.sh
 
 ## Running on Windows PowerShell
 
-In a PowerShell terminal run the installer once and then execute the scripts:
+In a PowerShell terminal run the setup script once and then execute the scripts:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File install.ps1
+cmd /c init.bat
 ```
+
+The script installs packages, verifies the Azure CLI and runs `az login` if necessary.
 
 Then run:
 
@@ -79,7 +93,7 @@ powershell -ExecutionPolicy Bypass -File check-budgets.ps1
 powershell -ExecutionPolicy Bypass -File generate-recommendations.ps1
 ```
 
-These commands will output colorized tables summarizing waste, budgets, and recommended actions using mock data.
+These commands output colorized tables summarizing waste, budgets and recommended actions retrieved from your tenant.
 
 
 ## Python FinOps CLI
@@ -99,7 +113,7 @@ Key capabilities include:
 * **Export options** – set a name with `--report-name` and output to CSV, JSON and/or PDF with `--report-type` (e.g. `--report-type csv json`). Use `--dir` to choose the folder. Trend reports export to JSON only. Markdown or HTML reports can be generated with `--export md` or `--export html` (requires the `jinja2` package).
 * **Improved error handling** and a beautiful terminal UI thanks to the Rich library.
 
-Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
+Run `./init.sh` (or `init.bat` on Windows) beforehand so the required Python packages are present.
 
 Run the CLI with Python or the installed command:
 
@@ -114,16 +128,10 @@ Exports can be written to CSV, JSON or PDF with `--report-type` and saved to a c
 
 ## Azure Authentication
 
-`azure_login.py` launches an interactive browser window to sign into Azure and
-prints your available subscriptions. It requires the `azure-identity` and
-`azure-mgmt-resource` packages which are installed automatically in the GitHub
-Actions workflow or by running `./install.sh` (or `install.ps1` on Windows).
+The `init.sh` and `init.bat` scripts invoke `az login` if you are not already authenticated.
+You can also run `azure_login.py` to sign in with a browser and list available subscriptions.
 
-Run locally with:
-
-```bash
-python3 azure_login.py
-```
+Run `python3 azure_login.py` if you want to view the subscriptions after logging in.
 
 ## FastAPI Service
 
