@@ -10,10 +10,19 @@ Clone the repository and install the Python dependencies:
 ```bash
 git clone https://github.com/cloudcwfranck/finazops.git
 cd finazops
-./install.sh
+bash init.sh   # or run init.bat on Windows
 ```
 
 After the packages are installed you can run the toolkit just like the AWS version but targeting Azure.
+
+## Components
+
+The repository is organised into several parts:
+
+- Shell and PowerShell scripts for common FinOps tasks.
+- A Python CLI available as the `finazops` command.
+- A lightweight FastAPI service for programmatic access.
+- Cross-platform setup scripts `init.sh` and `init.bat` to create a virtual environment and install requirements.
 
 ## Install from PyPI
 
@@ -49,7 +58,7 @@ tag like `v1.2.3` or trigger the workflow manually after configuring a
 
 ## Running on Replit or Linux/macOS
 
-After cloning run `./install.sh` once to set up Python packages. Then execute:
+After cloning run `./init.sh` (or `init.bat` on Windows) once to set up the virtual environment and install packages. In new shells activate it with `source .venv/bin/activate` (or `call .venv\Scripts\activate.bat` on Windows). Then execute:
 
 ```bash
 bash detect-waste.sh
@@ -65,10 +74,10 @@ chmod +x *.sh
 
 ## Running on Windows PowerShell
 
-In a PowerShell terminal run the installer once and then execute the scripts:
+In a PowerShell terminal run the setup script once and then execute the scripts:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File install.ps1
+cmd /c init.bat
 ```
 
 Then run:
@@ -99,7 +108,7 @@ Key capabilities include:
 * **Export options** – set a name with `--report-name` and output to CSV, JSON and/or PDF with `--report-type` (e.g. `--report-type csv json`). Use `--dir` to choose the folder. Trend reports export to JSON only. Markdown or HTML reports can be generated with `--export md` or `--export html` (requires the `jinja2` package).
 * **Improved error handling** and a beautiful terminal UI thanks to the Rich library.
 
-Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
+Run `./init.sh` (or `init.bat` on Windows) beforehand so the required Python packages are present.
 
 Run the CLI with Python or the installed command:
 
@@ -117,7 +126,7 @@ Exports can be written to CSV, JSON or PDF with `--report-type` and saved to a c
 `azure_login.py` launches an interactive browser window to sign into Azure and
 prints your available subscriptions. It requires the `azure-identity` and
 `azure-mgmt-resource` packages which are installed automatically in the GitHub
-Actions workflow or by running `./install.sh` (or `install.ps1` on Windows).
+Actions workflow or by running `./init.sh` (or `init.bat` on Windows).
 
 Run locally with:
 
