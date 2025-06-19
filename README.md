@@ -15,6 +15,15 @@ cd finazops
 
 After the packages are installed you can run the toolkit just like the AWS version but targeting Azure.
 
+## Components
+
+The repository is organised into several parts:
+
+- Shell and PowerShell scripts for common FinOps tasks.
+- A Python CLI available as the `finazops` command.
+- A lightweight FastAPI service for programmatic access.
+- Cross-platform setup scripts `init.sh` and `init.bat` to create a virtual environment and install requirements.
+
 ## Install from PyPI
 
 The CLI can be installed as a package from [PyPI](https://pypi.org/project/finazops/):
