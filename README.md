@@ -31,6 +31,7 @@ Execute the toolkit in a GitHub Actions runner using the `run-app` workflow.
 Click the badge above, choose **Run workflow**, and once the job completes open
 the run and view the output in the **Summary** tab directly in your browser.
 
+
 ## Running on Replit or Linux/macOS
 
 After cloning run `./install.sh` once to set up Python packages. Then execute:
