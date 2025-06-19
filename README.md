@@ -1,24 +1,40 @@
 # FinOps CLI Toolkit
 
-This repository contains a simple cross-platform FinOps command line toolkit written in Bash and PowerShell. The scripts simulate detection of cloud waste, budget checks, and cost‑saving recommendations using local mock data. Output is styled with ANSI colors and Unicode tables similar to the screenshot referenced in the project description.
+This project provides a simple cross‑platform FinOps command line toolkit for **Azure**.  The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+The scripts simulate detection of cloud waste, budget checks and cost‑saving recommendations using local mock data.  Output is styled with ANSI colours and Unicode tables similar to the screenshot referenced in the project description.
+
+## Quick start
+
+Clone the repository and install the Python dependencies:
+
+```bash
+git clone https://github.com/cloudcwfranck/finazops.git
+cd finazops
+./install.sh
+```
+
+After the packages are installed you can run the toolkit just like the AWS version but targeting Azure.
 
 ## Scripts
 
-- `detect-waste.sh` / `detect-waste.ps1` – find stopped EC2 instances, detached EIPs, and unattached EBS volumes and show estimated monthly waste.
-- `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple profiles and indicate if they are under or over budget.
+- `detect-waste.sh` / `detect-waste.ps1` – find stopped Azure VMs, unassociated public IPs, and unattached managed disks and show estimated monthly waste.
+- `check-budgets.sh` / `check-budgets.ps1` – check mock budgets for multiple subscriptions and indicate if they are under or over budget.
 - `generate-recommendations.sh` / `generate-recommendations.ps1` – display recommendations based on detected waste.
 
 The scripts rely only on Bash (for Linux/macOS) or PowerShell (for Windows). No cloud APIs or additional tools are required.
 
 ## Run on GitHub
 
-You can execute the toolkit directly in a GitHub Actions runner using the
-`run-app` workflow. Click the badge below and then select **Run workflow** on the
-Actions page to start a one-off run.
-
 [![Run FinOps Toolkit](https://github.com/cloudcwfranck/finazops/actions/workflows/run-app.yml/badge.svg?branch=main)](https://github.com/cloudcwfranck/finazops/actions/workflows/run-app.yml)
 
+Execute the toolkit in a GitHub Actions runner using the `run-app` workflow.
+Click the badge above, choose **Run workflow**, and once the job completes open
+the run and view the output in the **Summary** tab directly in your browser.
+
+
 ## Running on Replit or Linux/macOS
+
+After cloning run `./install.sh` once to set up Python packages. Then execute:
 
 ```bash
 bash detect-waste.sh
@@ -34,7 +50,13 @@ chmod +x *.sh
 
 ## Running on Windows PowerShell
 
-In a PowerShell terminal run:
+In a PowerShell terminal run the installer once and then execute the scripts:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+Then run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File detect-waste.ps1
@@ -47,7 +69,8 @@ These commands will output colorized tables summarizing waste, budgets, and reco
 
 ## Python FinOps CLI
 
-A new `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, profile management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI.
+A new `finops_cli.py` script adds enhanced features such as cost analysis by time period, cost trends, subscription management and export options. It uses the [Rich](https://pypi.org/project/rich/) library for a pleasant terminal UI.
+Run `./install.sh` (or `install.ps1` on Windows) beforehand so the required Python packages are present.
 
 Run the script with Python 3:
 
@@ -56,3 +79,17 @@ python3 finops_cli.py --help
 ```
 
 Exports can be written to CSV, JSON or PDF with `--report-type` and saved to a custom directory using `--dir`.
+
+## Azure Authentication
+
+`azure_login.py` launches an interactive browser window to sign into Azure and
+prints your available subscriptions. It requires the `azure-identity` and
+`azure-mgmt-resource` packages which are installed automatically in the GitHub
+Actions workflow or by running `./install.sh` (or `install.ps1` on Windows).
+
+Run locally with:
+
+```bash
+python3 azure_login.py
+```
+

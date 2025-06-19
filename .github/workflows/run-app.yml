@@ -7,17 +7,25 @@ jobs:
   execute:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
       - name: Install dependencies
         run: |
-          pip install --quiet rich fpdf
-      - name: Run FinOps CLI
+          pip install --quiet rich fpdf azure-identity azure-mgmt-resource
+
+      - name: Run FinOps CLI and scripts
         run: |
-          python finops_cli.py --trend
-          bash check-budgets.sh
-          bash detect-waste.sh
-          bash generate-recommendations.sh
+          set -e
+          tmp=$(mktemp)
+          python3 finops_cli.py --trend | tee -a "$tmp"
+          bash check-budgets.sh | tee -a "$tmp"
+          bash detect-waste.sh | tee -a "$tmp"
+          bash generate-recommendations.sh | tee -a "$tmp"
+          python3 azure_login.py | tee -a "$tmp"
+          cat "$tmp" >> "$GITHUB_STEP_SUMMARY"

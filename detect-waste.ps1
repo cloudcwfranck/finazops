@@ -4,18 +4,18 @@ $green="`e[1;32m"
 $yellow="`e[1;33m"
 $reset="`e[0m"
 
-$instances=@(
-  @{Id='i-001'; State='stopped'; Cost=10}
-  @{Id='i-002'; State='running'; Cost=20}
-  @{Id='i-003'; State='stopped'; Cost=15}
+$vms=@(
+  @{Id='vm-001'; State='stopped'; Cost=10}
+  @{Id='vm-002'; State='running'; Cost=20}
+  @{Id='vm-003'; State='stopped'; Cost=15}
 )
-$eips=@(
-  @{Id='eipalloc-001'; Attached=$false; Cost=3}
-  @{Id='eipalloc-002'; Attached=$true; Cost=0}
+$publicIps=@(
+  @{Id='pip-001'; Associated=$false; Cost=3}
+  @{Id='pip-002'; Associated=$true; Cost=0}
 )
-$volumes=@(
-  @{Id='vol-001'; Attached=$false; Cost=5}
-  @{Id='vol-002'; Attached=$true; Cost=0}
+$disks=@(
+  @{Id='disk-001'; Attached=$false; Cost=5}
+  @{Id='disk-002'; Attached=$true; Cost=0}
 )
 
 Write-Host ""
@@ -24,23 +24,23 @@ Write-Host "│ Resource ID │ Status   │ Monthly $ │"
 Write-Host "├──┼──┼──┤"
 
 $total=0
-foreach($i in $instances){
+foreach($i in $vms){
   if($i.State -eq 'stopped'){
     Write-Host ("│ {0,-12} │ {1,-8} │ {2,4}     │" -f $i.Id, $i.State, $i.Cost) -NoNewline
     Write-Host "" -ForegroundColor Red
     $total+=$i.Cost
   }
 }
-foreach($e in $eips){
-  if(-not $e.Attached){
-    Write-Host ("│ {0,-12} │ detached │ {1,4}     │" -f $e.Id, $e.Cost) -ForegroundColor Yellow
-    $total+=$e.Cost
+$publicIps | ForEach-Object {
+  if(-not $_.Associated){
+    Write-Host ("│ {0,-12} │ unassociated │ {1,4}     │" -f $_.Id, $_.Cost) -ForegroundColor Yellow
+    $total+=$_.Cost
   }
 }
-foreach($v in $volumes){
-  if(-not $v.Attached){
-    Write-Host ("│ {0,-12} │ unattached │ {1,4}   │" -f $v.Id, $v.Cost) -ForegroundColor Yellow
-    $total+=$v.Cost
+$disks | ForEach-Object {
+  if(-not $_.Attached){
+    Write-Host ("│ {0,-12} │ unattached │ {1,4}   │" -f $_.Id, $_.Cost) -ForegroundColor Yellow
+    $total+=$_.Cost
   }
 }
 Write-Host "└──┴──┴──┘"
