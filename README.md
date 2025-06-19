@@ -6,7 +6,7 @@ Output is styled with ANSI colours and Unicode tables similar to the screenshot 
 
 ## Quick start
 
-Clone the repository and install the Python dependencies:
+Clone the repository and bootstrap the environment:
 
 ```bash
 git clone https://github.com/cloudcwfranck/finazops.git
@@ -14,7 +14,7 @@ cd finazops
 bash init.sh   # or run init.bat on Windows
 ```
 
-The setup script installs dependencies, checks for the Azure CLI and runs `az login` if you are not already authenticated.
+The setup script verifies that Python 3 and the Azure CLI are available, creates a `.venv` folder, installs all requirements and runs `az login` if you are not already authenticated.
 
 After setup you can run the toolkit against your Azure resources.
 
