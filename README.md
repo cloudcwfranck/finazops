@@ -5,15 +5,30 @@ The remaining scripts continue to use local mock data for budget checks and reco
 
 ## Quick start
 
-Clone the repository and install the Python dependencies:
+Clone the repository and set up the Python environment:
 
 ```bash
 git clone https://github.com/cloudcwfranck/finazops.git
 cd finazops
-bash init.sh   # or run init.bat on Windows
+bash init.sh            # or run init.bat on Windows
+source .venv/bin/activate   # call .venv\Scripts\activate.bat on Windows
 ```
 
-After the packages are installed you can run the toolkit just like the AWS version but targeting Azure.
+Run the example scripts:
+
+```bash
+bash detect-waste.sh
+bash check-budgets.sh
+bash generate-recommendations.sh
+```
+
+You can also invoke the Rich CLI directly:
+
+```bash
+finazops --help
+# or
+python3 finops_cli.py --help
+```
 
 ## Components
 
